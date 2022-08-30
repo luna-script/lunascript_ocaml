@@ -1,4 +1,4 @@
 type expr = 
     | Int of int
-    | Plus of expr * expr
+    | BinOp of expr * string * expr
 [@@deriving show, eq]
