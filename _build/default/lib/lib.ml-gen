@@ -1,0 +1,10 @@
+(** @canonical Lib.Ast *)
+module Ast = Lib__Ast
+
+
+(** @canonical Lib.Lexer *)
+module Lexer = Lib__Lexer
+
+
+(** @canonical Lib.Parser *)
+module Parser = Lib__Parser

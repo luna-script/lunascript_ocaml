@@ -1,0 +1,4 @@
+(executable
+ (public_name lunascript_ocaml)
+ (name main)
+ (libraries lib))

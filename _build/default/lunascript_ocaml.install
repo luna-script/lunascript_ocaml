@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/lunascript_ocaml/META"
+  "_build/install/default/lib/lunascript_ocaml/dune-package"
+  "_build/install/default/lib/lunascript_ocaml/opam"
+]
+bin: [
+  "_build/install/default/bin/lunascript_ocaml"
+]
