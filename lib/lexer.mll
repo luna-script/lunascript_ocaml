@@ -8,8 +8,12 @@ let whitespace = ['\t' ' ' '\n']
 
 rule tokenize = parse
   | whitespace+ { tokenize lexbuf }
+  | "if" { IF }
+  | "else" { ELSE }
   | "(" { LPAREN }
   | ")" { RPAREN }
+  | "{" { LBRACE }
+  | "}" { RBRACE }
   | number as n { INT (int_of_string n ) }
   | "+" { PLUS }
   | "-" { MIN }

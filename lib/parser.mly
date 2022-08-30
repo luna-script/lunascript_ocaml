@@ -2,11 +2,12 @@
 open Ast
 %}
 
-%token LPAREN
-%token RPAREN
+%token LPAREN RPAREN
+%token LBRACE RBRACE
 %token EOF
 %token <int> INT
 %token PLUS MIN MUL DIV
+%token IF ELSE
 
 %left PLUS MIN
 %left MUL DIV
@@ -23,6 +24,9 @@ expr:
   | e1 = expr; MIN ; e2 = expr { BinOp (e1, "-", e2) }
   | e1 = expr; MUL ; e2 = expr { BinOp (e1, "*", e2) }
   | e1 = expr; DIV ; e2 = expr { BinOp (e1, "/", e2) }
+  | IF; cond = expr; LBRACE; then_expr = expr; RBRACE; ELSE; LBRACE; else_expr = expr; RBRACE; {
+      If (cond, then_expr, else_expr)
+  }
   | LPAREN; e = expr; RPAREN { e }
   | i = INT { Int i }
 
