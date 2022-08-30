@@ -1,5 +1,0 @@
-type token = RPAREN | PLUS | LPAREN | INT of int | EOF
-val menhir_begin_marker : int
-val xv_prog : Ast.expr
-val xv_expr : Ast.expr
-val menhir_end_marker : int
