@@ -8,6 +8,7 @@ open Ast
 %token <int> INT
 %token PLUS MIN MUL DIV
 %token IF ELSE
+%token TRUE FALSE
 
 %left PLUS MIN
 %left MUL DIV
@@ -28,5 +29,7 @@ expr:
       If (cond, then_expr, else_expr)
   }
   | LPAREN; e = expr; RPAREN { e }
+  | TRUE { Bool true }
+  | FALSE { Bool false }
   | i = INT { Int i }
 

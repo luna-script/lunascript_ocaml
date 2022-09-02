@@ -10,6 +10,8 @@ rule tokenize = parse
   | whitespace+ { tokenize lexbuf }
   | "if" { IF }
   | "else" { ELSE }
+  | "true" { TRUE }
+  | "false" { FALSE }
   | "(" { LPAREN }
   | ")" { RPAREN }
   | "{" { LBRACE }
