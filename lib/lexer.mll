@@ -17,6 +17,9 @@ rule tokenize = parse
   | "{" { LBRACE }
   | "}" { RBRACE }
   | number as n { INT (int_of_string n ) }
+  | "==" { EQ }
+  | ">" { GT }
+  | "<" { LT }
   | "+" { PLUS }
   | "-" { MIN }
   | "*" { MUL }

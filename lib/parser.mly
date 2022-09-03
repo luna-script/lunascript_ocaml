@@ -9,7 +9,9 @@ open Ast
 %token PLUS MIN MUL DIV
 %token IF ELSE
 %token TRUE FALSE
+%token EQ GT LT
 
+%nonassoc EQ GT LT
 %left PLUS MIN
 %left MUL DIV
 
@@ -25,6 +27,9 @@ expr:
   | e1 = expr; MIN ; e2 = expr { BinOp (e1, "-", e2) }
   | e1 = expr; MUL ; e2 = expr { BinOp (e1, "*", e2) }
   | e1 = expr; DIV ; e2 = expr { BinOp (e1, "/", e2) }
+  | e1 = expr; EQ ; e2 = expr { BinOp (e1, "==", e2) }
+  | e1 = expr; GT ; e2 = expr { BinOp (e1, ">", e2) }
+  | e1 = expr; LT ; e2 = expr { BinOp (e1, "<", e2) }
   | IF; cond = expr; LBRACE; then_expr = expr; RBRACE; ELSE; LBRACE; else_expr = expr; RBRACE; {
       If (cond, then_expr, else_expr)
   }
