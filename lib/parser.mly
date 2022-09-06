@@ -44,9 +44,7 @@ expr:
   | e1 = expr; LT ; e2 = expr { BinOp (e1, "<", e2) }
   | e = app { e }
   | ident = Ident { Var ident }
-  | IF; cond = expr; LBRACE; then_expr = expr; RBRACE; ELSE; LBRACE; else_expr = expr; RBRACE; {
-      If (cond, then_expr, else_expr)
-  }
+  | e = if_expr { e }
   | LPAREN; e = expr; RPAREN { e }
   | TRUE { Bool true }
   | FALSE { Bool false }
@@ -56,3 +54,12 @@ app:
   | e1 = expr; LPAREN; args = separated_list(COMMA, expr); RPAREN {
       List.fold_left (fun acm -> fun e -> Ast.App (acm, e)) e1 args
   }
+
+if_expr:
+  | IF; cond = expr; LBRACE; then_expr = expr; RBRACE; ELSE; LBRACE; else_expr = expr; RBRACE; {
+      If (cond, then_expr, else_expr)
+  }
+  | IF; cond = expr; LBRACE; then_expr = expr; RBRACE; ELSE; else_expr = if_expr; {
+      If (cond, then_expr, else_expr)
+  }
+
