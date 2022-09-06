@@ -12,6 +12,8 @@ open Ast
 %token TRUE FALSE
 %token EQ GT LT
 %token ASSIGN
+%token COMMA
+%token LET
 
 %nonassoc EQ GT LT
 %left PLUS MIN
@@ -22,11 +24,15 @@ open Ast
 %%
 
 prog:
-  | ss = separated_list(SEMICOLON, statement); EOF { ss }
+  | ss = list(statement); EOF { ss }
 
 statement:
-  | s = Ident; ASSIGN; e = expr { Assign (s, e) }
-  | e = expr { StmtExpr e }
+  | LET; s = Ident; LPAREN; args = separated_list(COMMA, Ident); RPAREN; ASSIGN; e = expr; SEMICOLON { 
+      let expr = List.fold_right (fun x -> fun acm -> Ast.Fun (x, acm)) args e in
+      Assign (s, expr) 
+  }
+  | LET; s = Ident; ASSIGN; e = expr; SEMICOLON { Assign (s, e) }
+  | e = expr; SEMICOLON { StmtExpr e }
 
 expr:
   | e1 = expr; PLUS ; e2 = expr { BinOp (e1, "+", e2) }
@@ -36,6 +42,7 @@ expr:
   | e1 = expr; EQ ; e2 = expr { BinOp (e1, "==", e2) }
   | e1 = expr; GT ; e2 = expr { BinOp (e1, ">", e2) }
   | e1 = expr; LT ; e2 = expr { BinOp (e1, "<", e2) }
+  | e = app { e }
   | ident = Ident { Var ident }
   | IF; cond = expr; LBRACE; then_expr = expr; RBRACE; ELSE; LBRACE; else_expr = expr; RBRACE; {
       If (cond, then_expr, else_expr)
@@ -45,3 +52,7 @@ expr:
   | FALSE { Bool false }
   | i = INT { Int i }
 
+app:
+  | e1 = expr; LPAREN; args = separated_list(COMMA, expr); RPAREN {
+      List.fold_left (fun acm -> fun e -> Ast.App (acm, e)) e1 args
+  }

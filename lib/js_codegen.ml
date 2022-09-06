@@ -6,6 +6,9 @@ let rec expr_codegen = function
       ^ expr_codegen else_expr ^ ")"
   | Ast.Bool b -> string_of_bool b
   | Ast.Var ident -> ident
+  | Ast.Fun (arg, expr) -> "(" ^ arg ^ ") => " ^ "(" ^ expr_codegen expr ^ ")"
+  | Ast.App (expr1, expr2) ->
+      "(" ^ expr_codegen expr1 ^ ")(" ^ expr_codegen expr2 ^ ")"
 
 let rec codegen = function
   | [] -> ""

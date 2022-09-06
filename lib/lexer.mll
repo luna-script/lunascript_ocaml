@@ -10,6 +10,7 @@ let ident = alpha+
 
 rule tokenize = parse
   | whitespace+ { tokenize lexbuf }
+  | "let" { LET }
   | "if" { IF }
   | "else" { ELSE }
   | "true" { TRUE }
@@ -18,6 +19,7 @@ rule tokenize = parse
   | ")" { RPAREN }
   | "{" { LBRACE }
   | "}" { RBRACE }
+  | "," { COMMA }
   | number as n { INT (int_of_string n ) }
   | ident as s { Ident s }
   | "==" { EQ }
