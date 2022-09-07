@@ -9,8 +9,10 @@ let rec expr_codegen = function
   | Ast.Fun (arg, expr) -> "(" ^ arg ^ ") => " ^ "(" ^ expr_codegen expr ^ ")"
   | Ast.App (expr1, expr2) ->
       "(" ^ expr_codegen expr1 ^ ")(" ^ expr_codegen expr2 ^ ")"
+  | Ast.Block (stmts, expr) ->
+      "((()=>{\n" ^ codegen stmts ^ "return " ^ expr_codegen expr ^ "\n})())"
 
-let rec codegen = function
+and codegen = function
   | [] -> ""
   | x :: xs -> (
       match x with

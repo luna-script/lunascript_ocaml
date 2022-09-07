@@ -6,6 +6,7 @@ type expr =
   | Var of string
   | Fun of string * expr
   | App of expr * expr
+  | Block of statement list * expr
 [@@deriving show, eq]
 
-type statement = Assign of string * expr | StmtExpr of expr
+and statement = Assign of string * expr | StmtExpr of expr
