@@ -26,15 +26,15 @@ exception SyntaxError of string
 %%
 
 prog:
-  | ss = list(statement); EOF { ss }
+  | ss = separated_list(SEMICOLON, statement); EOF { ss }
 
 statement:
-  | LET; s = Ident; LPAREN; args = separated_list(COMMA, Ident); RPAREN; ASSIGN; e = expr; SEMICOLON { 
+  | LET; s = Ident; LPAREN; args = separated_list(COMMA, Ident); RPAREN; ASSIGN; e = expr { 
       let expr = List.fold_right (fun x -> fun acm -> Ast.Fun (x, acm)) args e in
       Assign (s, expr) 
   }
-  | LET; s = Ident; ASSIGN; e = expr; SEMICOLON { Assign (s, e) }
-  | e = expr; SEMICOLON { StmtExpr e }
+  | LET; s = Ident; ASSIGN; e = expr { Assign (s, e) }
+  | e = expr { StmtExpr e }
 
 expr:
   | e1 = expr; PLUS ; e2 = expr { BinOp (e1, "+", e2) }
@@ -66,8 +66,9 @@ if_expr:
   }
 
 block_expr:
-  | LBRACE; stmts = nonempty_list(statement); RBRACE {
+  | LBRACE; stmts = separated_list(SEMICOLON, statement); RBRACE {
       match List.rev stmts with
+      | (StmtExpr e)::[] -> e
       | (StmtExpr e)::rev_stmts -> Block (List.rev rev_stmts, e)
       | _ -> raise (SyntaxError "A block expression must end with an expression")
   }
