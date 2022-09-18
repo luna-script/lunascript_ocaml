@@ -3,7 +3,7 @@
 # Shared cache: disabled
 # Workspace root: /home/taka2/lunascript_ocaml
 # Auto-detected concurrency: 8
-$ /usr/bin/ocamlc.opt -config > /tmp/dune_4ce67b_output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune_afb362_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -180,3 +180,4 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune_4ce67b_output
 #      ; windows_unicode = false
 #      }
 #  }
+$ (cd _build/default/jslib && /home/taka2/.opam/4.14.0/bin/js_of_ocaml link --source-map-inline -o jslib.bc.js jslib.bc.runtime.js ../.js/stdlib/stdlib.cma.js ../.js/result/result.cma.js ../.js/ppx_deriving.runtime/ppx_deriving_runtime.cma.js ../lib/.lib.objs/lib.cma.js ../.js/js_of_ocaml-compiler.runtime/jsoo_runtime.cma.js ../.js/js_of_ocaml/js_of_ocaml.cma.js .jslib.eobjs/byte/dune__exe__Jslib.cmo.js ../.js/stdlib/std_exit.cmo.js)

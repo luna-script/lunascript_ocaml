@@ -7,7 +7,7 @@
         <button type="button" id="exec">exec!</button>
     </body>
     <script>
-        import("./_build/default/jslib/jslib.bc.js").then((_) => {
+        import("./jslib.bc.js").then((_) => {
                     let eval = str => eval(jslib.compile(str))
                     let textarea = document.getElementById('code');
                     let button = document.getElementById("exec");
