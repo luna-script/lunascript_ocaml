@@ -9,17 +9,21 @@ exception SyntaxError of string
 %token EOF SEMICOLON
 %token <int> INT
 %token <string> Ident
-%token PLUS MIN MUL DIV
 %token IF ELSE
 %token TRUE FALSE
-%token EQ GT LT
 %token ASSIGN
 %token COMMA
 %token LET
+%token <string> OP0 OP1 OP2 OP3 OP4 OP5 OP6 OP7 
 
-%nonassoc EQ GT LT
-%left PLUS MIN
-%left MUL DIV
+%left OP0
+%left OP1
+%left OP2
+%left OP3
+%left OP4
+%left OP5
+%left OP6
+%left OP7
 
 %start <Ast.statement list> prog
 
@@ -37,12 +41,14 @@ statement:
   | e = expr { StmtExpr e }
 
 expr:
-  | e1 = expr; PLUS ; e2 = expr { BinOp (e1, "+", e2) }
-  | e1 = expr; MIN ; e2 = expr { BinOp (e1, "-", e2) }
-  | e1 = expr; MUL ; e2 = expr { BinOp (e1, "*", e2) } | e1 = expr; DIV ; e2 = expr { BinOp (e1, "/", e2) }
-  | e1 = expr; EQ ; e2 = expr { BinOp (e1, "==", e2) }
-  | e1 = expr; GT ; e2 = expr { BinOp (e1, ">", e2) }
-  | e1 = expr; LT ; e2 = expr { BinOp (e1, "<", e2) }
+  | e1 = expr; op = OP0 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP1 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP2 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP3 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP4 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP5 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP6 ; e2 = expr { BinOp (e1, op, e2) }
+  | e1 = expr; op = OP7 ; e2 = expr { BinOp (e1, op, e2) }
   | e = app { e }
   | e = block_expr { e }
   | ident = Ident { Var ident }
