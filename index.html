@@ -1,0 +1,20 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>lunascript playground</h1>
+        <textarea id="code" style="width: 600px; height: 600px">let fact(n) = if n == 0 {1} else {n * fact(n - 1)}; fact(5)</textarea>
+        <button type="button" id="exec">exec!</button>
+    </body>
+    <script>
+        import("./_build/default/docs/jslib.bc.js").then((_) => {
+                    let eval = str => eval(jslib.compile(str))
+                    let textarea = document.getElementById('code');
+                    let button = document.getElementById("exec");
+                    button.addEventListener("click", () => {
+                                const jscode = jslib.compile('{' + textarea.value + '}')
+                                alert(Function('return ' + jscode)())
+                            })
+                })
+    </script>
+</html>

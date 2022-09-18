@@ -19,3 +19,8 @@ and codegen = function
       | Ast.Assign (ident, expr) ->
           "const " ^ ident ^ " = " ^ expr_codegen expr ^ ";\n" ^ codegen xs
       | Ast.StmtExpr expr -> expr_codegen expr ^ ";\n" ^ codegen xs)
+
+let compile str =
+  let lexbuf = Lexing.from_string str in
+  let expr = Parser.prog Lexer.tokenize lexbuf in
+  codegen expr

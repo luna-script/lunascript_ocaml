@@ -1,0 +1,5 @@
+(executable
+ (name jslib)
+ (libraries lib js_of_ocaml)
+ (modes js)
+ (preprocess (pps js_of_ocaml-ppx)))
