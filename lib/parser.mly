@@ -14,6 +14,7 @@ exception SyntaxError of string
 %token ASSIGN
 %token COMMA
 %token LET
+%token ARROW FUN
 %token <string> OP0 OP1 OP2 OP3 OP4 OP5 OP6 OP7 
 
 %left OP0
@@ -49,6 +50,7 @@ expr:
   | e1 = expr; op = OP5 ; e2 = expr { BinOp (e1, op, e2) }
   | e1 = expr; op = OP6 ; e2 = expr { BinOp (e1, op, e2) }
   | e1 = expr; op = OP7 ; e2 = expr { BinOp (e1, op, e2) }
+  | FUN; ident = Ident; ARROW; e = expr { Ast.Fun (ident, e) }
   | e = app { e }
   | e = block_expr { e }
   | ident = Ident { Var ident }

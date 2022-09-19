@@ -16,6 +16,7 @@ rule tokenize = parse
   | "else" { ELSE }
   | "true" { TRUE }
   | "false" { FALSE }
+  | "fn" { FUN }
   | "(" { LPAREN }
   | ")" { RPAREN }
   | "{" { LBRACE }
@@ -27,6 +28,7 @@ rule tokenize = parse
   | op+ as lexeme {
       match lexeme with
       | "=" -> ASSIGN
+      | "->" -> ARROW
       | _ -> match lexeme.[0] with
           | '|' -> OP0 lexeme
           | '^' -> OP1 lexeme
